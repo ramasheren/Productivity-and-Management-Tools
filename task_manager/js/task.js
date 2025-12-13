@@ -2,7 +2,7 @@ let tasks = [];
 let currTask = 0;
 let taskIp = document.getElementById("taskIp");
 let submitBtn = document.getElementById("submitBtn");
-const searchInput = document.getElementById("search");
+let searchInput = document.getElementById("search");
 
 if (JSON.parse(localStorage.getItem('tasks')) != null) {
   tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -16,14 +16,15 @@ submitBtn.onclick = function () {
   displayData();
 };
 
+//display
 function displayData() {
   let container = "";
-  const sortedTasks = tasks.slice().sort((a, b) => a.completed - b.completed);
+  let sortedTasks = tasks.slice().sort((a, b) => a.completed - b.completed);
 
   sortedTasks.forEach((task) => {
-  const originalIndex = tasks.indexOf(task);
-  const checked = task.completed ? "checked" : ""; 
-  const style = task.completed ? 'style="text-decoration: line-through; opacity: 0.5;"' : "";
+  let originalIndex = tasks.indexOf(task);
+  let checked = task.completed ? "checked" : ""; 
+  let style = task.completed ? 'style="text-decoration: line-through; opacity: 0.5;"' : "";
 
   container += `
     <div class="task-item">
@@ -43,27 +44,27 @@ function displayData() {
 }
 
 
-// add task
+//add task
 function addTask() {
   tasks.push({ text: taskIp.value, completed: false });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// delete task
+//delete task
 function deleteTask(index) {
   tasks.splice(index, 1);
   localStorage.setItem("tasks", JSON.stringify(tasks));
   displayData();
 }
 
-// get task to edit
+//get task to edit
 function getTask(index) {
   taskIp.value = tasks[index].text;
   submitBtn.innerHTML = "Edit task";
   currTask = index;
 }
 
-// update task
+//update task
 function updateTask() {
   tasks[currTask].text = taskIp.value;
   submitBtn.innerHTML = "Add task";
@@ -72,9 +73,9 @@ function updateTask() {
 
 //auto search
 searchInput.addEventListener("input", () => {
-  const keyword = searchInput.value.toLowerCase();
+  let keyword = searchInput.value.toLowerCase();
   document.querySelectorAll("#tasksd .task-item").forEach(taskItem => {
-    const text = taskItem.querySelector(".task-text").textContent.toLowerCase();
+    let text = taskItem.querySelector(".task-text").textContent.toLowerCase();
     taskItem.style.display = text.includes(keyword) ? "flex" : "none";
   });
 });
@@ -83,7 +84,7 @@ searchInput.addEventListener("input", () => {
 function checkTask(index, checkbox) {
   tasks[index].completed = checkbox.checked;
   localStorage.setItem("tasks", JSON.stringify(tasks));
-  const taskEl = checkbox.closest(".task-item");
+  let taskEl = checkbox.closest(".task-item");
   if (checkbox.checked) {
     taskEl.querySelector(".task-text").style.textDecoration = "line-through";
     taskEl.querySelector(".task-text").style.opacity = "0.5";
