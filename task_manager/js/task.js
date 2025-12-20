@@ -1,98 +1,90 @@
 let tasks = [];
-let currTask = 0;
-let taskIp = document.getElementById("taskIp");
-let submitBtn = document.getElementById("submitBtn");
-let searchInput = document.getElementById("search");
+let currTask = null;
 
-if (JSON.parse(localStorage.getItem('tasks')) != null) {
-  tasks = JSON.parse(localStorage.getItem('tasks'));
+const popup = document.getElementById("promptPopup");
+const openBtn = document.getElementById("openFormBtn");
+const closeBtn = document.getElementById("closeBtn");
+const submitBtn = document.getElementById("submitBtn");
+const taskIp = document.getElementById("taskIp");
+const searchInput = document.getElementById("search");
+
+if (localStorage.getItem("tasks")) {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
   displayData();
 }
 
-submitBtn.onclick = function () {
-  if (submitBtn.innerHTML === "Add task") addTask();
-  else updateTask();
+openBtn.onclick = () => {
+  popup.style.display = "flex";
+  submitBtn.textContent = "Add task";
   taskIp.value = "";
+  currTask = null;
+};
+
+closeBtn.onclick = () => popup.style.display = "none";
+
+submitBtn.onclick = () => {
+  if (!taskIp.value.trim()) return;
+
+  if (currTask === null) {
+    tasks.push({ text: taskIp.value, completed: false });
+  } else {
+    tasks[currTask].text = taskIp.value;
+  }
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  popup.style.display = "none";
   displayData();
 };
 
-//display
 function displayData() {
   let container = "";
-  let sortedTasks = tasks.slice().sort((a, b) => a.completed - b.completed);
+  let sorted = tasks.slice().sort((a,b) => a.completed - b.completed);
 
-  sortedTasks.forEach((task) => {
-  let originalIndex = tasks.indexOf(task);
-  let checked = task.completed ? "checked" : ""; 
-  let style = task.completed ? 'style="text-decoration: line-through; opacity: 0.5;"' : "";
+  sorted.forEach(task => {
+    let index = tasks.indexOf(task);
+    let checked = task.completed ? "checked" : "";
+    let style = task.completed ? "text-decoration:line-through;opacity:.5" : "";
 
-  container += `
-    <div class="task-item">
-      <label>
-        <input type="checkbox" class="task-checkbox" ${checked} onchange="checkTask(${originalIndex}, this)">
-        <span class="task-text" ${style}>${task.text}</span>
-      </label>
-      <div class="action">
-        <i class="fa-solid fa-pen-to-square edt act" onclick="getTask(${originalIndex})"></i>
-        <i class="fa-solid fa-trash trsh act" onclick="deleteTask(${originalIndex})"></i>
+    container += `
+      <div class="task-item">
+        <label>
+          <input type="checkbox" ${checked} onchange="toggleTask(${index})">
+          <span class="task-text" style="${style}">${task.text}</span>
+        </label>
+        <div class="action">
+          <i class="fa-solid fa-pen edit-btn" onclick="editTask(${index})"></i>
+          <i class="fa-solid fa-trash delete-btn" onclick="deleteTask(${index})"></i>
+        </div>
       </div>
-    </div>
-  `;
-});
+    `;
+  });
 
   document.getElementById("tasksd").innerHTML = container;
 }
 
-
-//add task
-function addTask() {
-  tasks.push({ text: taskIp.value, completed: false });
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-//delete task
-function deleteTask(index) {
-  tasks.splice(index, 1);
+function deleteTask(i) {
+  tasks.splice(i,1);
   localStorage.setItem("tasks", JSON.stringify(tasks));
   displayData();
 }
 
-//get task to edit
-function getTask(index) {
-  taskIp.value = tasks[index].text;
-  submitBtn.innerHTML = "Edit task";
-  currTask = index;
+function editTask(i) {
+  taskIp.value = tasks[i].text;
+  submitBtn.textContent = "Edit task";
+  currTask = i;
+  popup.style.display = "flex";
 }
 
-//update task
-function updateTask() {
-  tasks[currTask].text = taskIp.value;
-  submitBtn.innerHTML = "Add task";
+function toggleTask(i) {
+  tasks[i].completed = !tasks[i].completed;
   localStorage.setItem("tasks", JSON.stringify(tasks));
+  displayData();
 }
 
-//auto search
 searchInput.addEventListener("input", () => {
-  let keyword = searchInput.value.toLowerCase();
-  document.querySelectorAll("#tasksd .task-item").forEach(taskItem => {
-    let text = taskItem.querySelector(".task-text").textContent.toLowerCase();
-    taskItem.style.display = text.includes(keyword) ? "flex" : "none";
+  let key = searchInput.value.toLowerCase();
+  document.querySelectorAll(".task-item").forEach(item => {
+    let text = item.querySelector(".task-text").textContent.toLowerCase();
+    item.style.display = text.includes(key) ? "flex" : "none";
   });
 });
-
-//checkbox style and move task
-function checkTask(index, checkbox) {
-  tasks[index].completed = checkbox.checked;
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  let taskEl = checkbox.closest(".task-item");
-  if (checkbox.checked) {
-    taskEl.querySelector(".task-text").style.textDecoration = "line-through";
-    taskEl.querySelector(".task-text").style.opacity = "0.5";
-    document.getElementById("tasksd").appendChild(taskEl);
-  } else {
-    taskEl.querySelector(".task-text").style.textDecoration = "none";
-    taskEl.querySelector(".task-text").style.opacity = "1";
-    document.getElementById("tasksd").prepend(taskEl);
-  }
-}
-

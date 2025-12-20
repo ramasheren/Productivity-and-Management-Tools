@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<div class="container">
-    <header class="section-title">
-        <h1>TO-DO LIST</h1>
-    </header>
 
-    <section class="task-input position-relative">
-        <input id="taskIp" class="shiny" type="text">
-        <button id="submitBtn">Add task</button>
-    </section>
+<!-- Top Navbar -->
+<div class="topbar">
+  <ul class="topbar-menu">
+    <li class="active"><a href="tasks.html" title="Task Manager"><i class="fa-solid fa-list-check"></i></a></li>
+    <li><a href="calendar.html" title="Calendar"><i class="fa-solid fa-calendar-days"></i></a></li>
+    <li><a href="habits.html" title="Habits Tracker"><i class="fa-solid fa-bolt"></i></a></li>
+    <li><a href="expenses.html" title="Expenses Manager"><i class="fa-solid fa-wallet"></i></a></li>
+  </ul>
+</div>
 
-    <hr class="divider">
+<!-- Side Profile Bar -->
+<div class="profilebar">
+  <img src="https://i.pravatar.cc/100" alt="Profile Avatar" class="avatar">
+  <h4 class="username">Name from login</h4>
+  <i class="fa-solid fa-gear settings"></i>
+</div>
 
-    <section class="search-bar">
-        <input id="search" class="shiny" type="text" placeholder="Search by name...">
-    </section>
 
-    <section id="tasksd"></section>
+<div class="maim">
+<div class="app">
+  <h2>Todo List</h2>
+
+  <input type="text" id="search" placeholder="Search tasks...">
+
+  <div id="tasksd"></div>
+
+  <button id="openFormBtn">Add Task</button>
+</div>
+
+<div id="promptPopup" class="popup">
+  <div class="popup-content">
+    <span id="closeBtn">&times;</span>
+    <textarea id="taskIp" placeholder="Enter task"></textarea>
+    <button id="submitBtn">Add task</button>
+  </div>
+</div>
 </div>
 <script src="js/task.js"></script>
 </body>
