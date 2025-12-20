@@ -207,7 +207,7 @@ body {
   width: 200px;
   background: #fff;
   border-radius: 14px;
-  padding: 20px;
+  padding: 30px;
   position: fixed;
   top: 100px; 
   left: 0px;
@@ -244,6 +244,6 @@ body {
 
 .main {
   margin-left: 240px;
-  margin-top: 150px;
+  margin-top: 100px;
   padding: 20px;
 }
