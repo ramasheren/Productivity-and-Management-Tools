@@ -51,10 +51,7 @@ function displayData() {
           <input type="checkbox" ${checked} onchange="toggleTask(${index})">
           <span class="task-text" style="${style}">${task.text}</span>
         </label>
-        <div class="action">
-          <i class="fa-solid fa-pen edit-btn" onclick="editTask(${index})"></i>
-          <i class="fa-solid fa-trash delete-btn" onclick="deleteTask(${index})"></i>
-        </div>
+        C
       </div>
     `;
   });
