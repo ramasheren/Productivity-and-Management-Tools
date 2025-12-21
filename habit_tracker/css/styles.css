@@ -1,0 +1,196 @@
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tracker {
+  background: #fff;
+  width: 420px;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.15);
+}
+
+.tracker h1 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 140px repeat(7, 1fr);
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+
+.header {
+  margin-left: 10px;
+  color: #000000;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.fa-droplet{ color: rgb(0, 200, 255);}
+.fa-pen{ color: rgb(28, 8, 91);}
+.fa-dumbbell{ color: #0b1f01ae;}
+.fa-book{ color:#7d0808;}
+.fa-bowl-food{ color:#194204ae;}
+.fa-broom{ color: #1c1b1bb1;}
+.fa-cutlery{ color:#08687d; }
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+
+label {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+input {
+  display: none;
+}
+
+label span {
+  width: 14px;
+  height: 14px;
+  border-radius: 5px;
+  opacity: 0.25;
+}
+
+
+input:checked + span {
+  opacity: 1;
+}
+
+.blue span { background: #63c7d6; }
+.purple span { background: #7b6cff; }
+.red span { background: #f88787; }
+.green span { background:#63d6a2}
+.orange span { background: #e5a673;}
+.olive span {background: #91e467ae;}
+.pink span {background:pink;}
+
+
+.topbar {
+  width: 100%;
+  background: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+  position: fixed;
+  top: 0;
+}
+
+.topbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.topbar-menu li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.topbar-menu li a:hover,
+.topbar-menu li.active a {
+  background: #667eea;
+  color: #fff;
+}
+
+/* Side Profile Bar */
+.profilebar {
+  width: 200px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 30px;
+  position: fixed;
+  top: 100px; 
+  left: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.1);
+}
+
+.profilebar .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profilebar .username {
+  font-size: 18px;
+  color: #333;
+}
+
+.profilebar .settings {
+  font-size: 20px;
+  cursor: pointer;
+  color: #667eea;
+  transition: color 0.2s;
+}
+
+.profilebar .settings:hover {
+  color: #4f46e5;
+}
+#submitBtn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #764ba2;
+  color: white;
+  cursor: pointer;
+}
+
+.save-status {
+  margin-left: 12px;
+  color: #4caf50;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.save-status.show {
+  opacity: 1;
+}
+
+.main {
+  margin-left: 240px;
+  margin-top: 100px;
+  padding: 20px;
+}
