@@ -55,7 +55,21 @@
       "password": "123"
     }
   ],
-
-  "tasks" : []
-  
+  "tasks": [
+    {
+      "id": "448f",
+      "text": "Go to the gym",
+      "completed": true
+    },
+    {
+      "id": "43f6",
+      "text": "Finalize the webdev project",
+      "completed": false
+    },
+    {
+      "id": "a8c8",
+      "text": "Do the react task",
+      "completed": false
+    }
+  ]
 }

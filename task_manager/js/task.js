@@ -1,6 +1,8 @@
 let tasks = [];
 let currTask = null;
 
+const apiUrl = "http://localhost:5000/tasks";
+
 const popup = document.getElementById("promptPopup");
 const openBtn = document.getElementById("openFormBtn");
 const closeBtn = document.getElementById("closeBtn");
@@ -14,10 +16,7 @@ const user = JSON.parse(localStorage.getItem("loggedUser"));
 
 nameEl.innerHTML = user.name;
 
-if (localStorage.getItem("tasks")) {
-  tasks = JSON.parse(localStorage.getItem("tasks"));
-  displayData();
-}
+/* ================= UI ================= */
 
 openBtn.onclick = () => {
   popup.style.display = "flex";
@@ -28,26 +27,64 @@ openBtn.onclick = () => {
 
 closeBtn.onclick = () => popup.style.display = "none";
 
-submitBtn.onclick = () => {
+submitBtn.onclick = handleSubmit;
+
+function handleSubmit() {
   if (!taskIp.value.trim()) return;
+  currTask === null ? addTask() : editTask();
+}
 
-  if (currTask === null) {
-    tasks.push({ text: taskIp.value, completed: false });
-  } else {
-    tasks[currTask].text = taskIp.value;
-  }
+function loadTasks() {
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      tasks = data;
+      displayData();
+    });
+}
 
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  popup.style.display = "none";
-  displayData();
-};
+loadTasks();
+
+function addTask() {
+  fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      text: taskIp.value,
+      completed: false
+    })
+  }).then(() => {
+    popup.style.display = "none";
+    taskIp.value = "";
+    loadTasks();
+  });
+}
+
+function editTask() {
+  const task = tasks[currTask];
+
+  fetch(`${apiUrl}/${task.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ...task,
+      text: taskIp.value
+    })
+  }).then(() => {
+    currTask = null;
+    popup.style.display = "none";
+    taskIp.value = "";
+    submitBtn.textContent = "Add task";
+    loadTasks();
+  });
+}
 
 function displayData() {
   let container = "";
-  let sorted = tasks.slice().sort((a,b) => a.completed - b.completed);
+  let sorted = tasks.slice().sort((a, b) => a.completed - b.completed);
 
   sorted.forEach(task => {
-    let index = tasks.indexOf(task);
+    let index = tasks.findIndex(t => t.id === task.id);
     let checked = task.completed ? "checked" : "";
     let style = task.completed ? "text-decoration:line-through;opacity:.5" : "";
 
@@ -57,7 +94,10 @@ function displayData() {
           <input type="checkbox" ${checked} onchange="toggleTask(${index})">
           <span class="task-text" style="${style}">${task.text}</span>
         </label>
-        C
+        <div class="action">
+          <i class="fa-solid fa-pen-to-square edit-btn" onclick="getTask(${index})"></i>
+          <i class="fa-solid fa-trash delete-btn" onclick="deleteTask(${index})"></i>
+        </div>
       </div>
     `;
   });
@@ -66,22 +106,29 @@ function displayData() {
 }
 
 function deleteTask(i) {
-  tasks.splice(i,1);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  displayData();
-}
-
-function editTask(i) {
-  taskIp.value = tasks[i].text;
-  submitBtn.textContent = "Edit task";
-  currTask = i;
-  popup.style.display = "flex";
+  fetch(`${apiUrl}/${tasks[i].id}`, {
+    method: "DELETE"
+  }).then(loadTasks);
 }
 
 function toggleTask(i) {
-  tasks[i].completed = !tasks[i].completed;
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  displayData();
+  const task = tasks[i];
+
+  fetch(`${apiUrl}/${task.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ...task,
+      completed: !task.completed
+    })
+  }).then(loadTasks);
+}
+
+function getTask(i) {
+  currTask = i;
+  taskIp.value = tasks[i].text;
+  submitBtn.textContent = "Edit task";
+  popup.style.display = "flex";
 }
 
 searchInput.addEventListener("input", () => {

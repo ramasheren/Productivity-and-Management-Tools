@@ -60,6 +60,8 @@ nextBtn.onclick = () => {
 
 renderCalendar(currentMonth, currentYear);
 
+// --------------------------------------------crud
+
 let eventos = JSON.parse(localStorage.getItem("eventos")) || [];
 let selectedDate = null;
 
