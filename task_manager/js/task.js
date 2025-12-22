@@ -10,7 +10,6 @@ const submitBtn = document.getElementById("submitBtn");
 const taskIp = document.getElementById("taskIp");
 const searchInput = document.getElementById("search");
 
-/* ================= UI ================= */
 
 openBtn.onclick = () => {
   popup.style.display = "flex";
