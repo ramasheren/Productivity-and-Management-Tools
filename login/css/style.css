@@ -1,0 +1,103 @@
+/* Reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: system-ui, sans-serif;
+}
+
+/* Form */
+form {
+  border: 2px solid #764ba2;
+  padding: 50px;
+  border-radius: 12px;
+  background-color: whitesmoke;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  width: 350px;
+}
+
+/* Form headings and paragraph */
+form h1, form p {
+  text-align: center;
+}
+
+form p {
+  color: rgba(117, 116, 116, 0.7);
+  margin-bottom: 20px;
+}
+
+/* Container for labels + inputs */
+form .container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+/* Labels */
+label {
+  padding-left: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  padding-bottom: 5px;
+}
+
+/* Inputs */
+#name,
+#email,
+#password {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+#name:focus,
+#email:focus,
+#password:focus {
+  border-color: #667eea;
+}
+
+/* Buttons */
+form button {
+  color: white;
+  width: 100%;
+  border-radius: 12px;
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #667eea;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+}
+
+/* Button hover */
+form button:hover {
+  transform: translateY(-2px);
+  background-color: #764ba2;
+}
+
+/* Optional: small screens */
+@media (max-width: 400px) {
+  form {
+    width: 90%;
+    padding: 30px;
+  }
+
+  form button {
+    font-size: 18px;
+    padding: 8px 0;
+  }
+}
