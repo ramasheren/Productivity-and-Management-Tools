@@ -7,6 +7,12 @@ const closeBtn = document.getElementById("closeBtn");
 const submitBtn = document.getElementById("submitBtn");
 const taskIp = document.getElementById("taskIp");
 const searchInput = document.getElementById("search");
+const nameEl = document.querySelector(".username"); // class selector
+
+// Get the logged-in user
+const user = JSON.parse(localStorage.getItem("loggedUser"));
+
+nameEl.innerHTML = user.name;
 
 if (localStorage.getItem("tasks")) {
   tasks = JSON.parse(localStorage.getItem("tasks"));
