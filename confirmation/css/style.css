@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: system-ui, sans-serif;
+}
+
+.thankyou-container {
+    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    background-color: whitesmoke;
+    padding: 40px;
+}
+
+#loginBtn {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    width: 70%;
+    background-color: #667eea;
+    padding: 15px 0px;
+    margin-top: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
