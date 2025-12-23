@@ -1,7 +1,10 @@
 let tasks = [];
 let currTask = null;
 
-const apiUrl = "http://localhost:5000/tasks";
+import { getCurrentUser } from "../../login/js/main.js";
+const currUser = getCurrentUser();
+
+const apiUrl = `http://localhost:5000/users/${currUser.id}`;
 
 const popup = document.getElementById("promptPopup");
 const openBtn = document.getElementById("openFormBtn");
@@ -9,13 +12,9 @@ const closeBtn = document.getElementById("closeBtn");
 const submitBtn = document.getElementById("submitBtn");
 const taskIp = document.getElementById("taskIp");
 const searchInput = document.getElementById("search");
-const nameEl = document.querySelector(".username"); // class selector
+const nameEl = document.querySelector(".username");
 
-// Get the logged-in user
-const user = JSON.parse(localStorage.getItem("loggedUser"));
-
-nameEl.innerHTML = user.name;
-
+nameEl.innerHTML = currUser.name;
 
 openBtn.onclick = () => {
   popup.style.display = "flex";
@@ -33,49 +32,68 @@ function handleSubmit() {
   currTask === null ? addTask() : editTask();
 }
 
-function loadTasks() {
-  fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-      tasks = data;
-      displayData();
+async function loadTasks() {
+  const res = await fetch(apiUrl);
+  const user = await res.json();
+
+  if (!user.tasks) {
+    user.tasks = [];
+    await fetch(apiUrl, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tasks: user.tasks })
     });
+  }
+
+  tasks = user.tasks;
+  displayData();
 }
 
 loadTasks();
 
-function addTask() {
-  fetch(apiUrl, {
-    method: "POST",
+async function addTask() {
+  const newTask = { 
+    id: Date.now(),
+    text: taskIp.value,
+    completed: false
+  };
+
+  const res = await fetch(apiUrl);
+  const user = await res.json();
+
+  if (!user.tasks) user.tasks = [];
+
+  user.tasks.push(newTask);
+
+  await fetch(apiUrl, {
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      text: taskIp.value,
-      completed: false
-    })
-  }).then(() => {
-    popup.style.display = "none";
-    taskIp.value = "";
-    loadTasks();
+    body: JSON.stringify({ tasks: user.tasks })
   });
+
+  popup.style.display = "none";
+  taskIp.value = "";
+  await loadTasks();
 }
 
-function editTask() {
-  const task = tasks[currTask];
+async function editTask() {
+  const res = await fetch(apiUrl);
+  const user = await res.json();
 
-  fetch(`${apiUrl}/${task.id}`, {
-    method: "PUT",
+  const task = user.tasks[currTask];
+  task.text = taskIp.value;
+
+  await fetch(apiUrl, {
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ...task,
-      text: taskIp.value
-    })
-  }).then(() => {
-    currTask = null;
-    popup.style.display = "none";
-    taskIp.value = "";
-    submitBtn.textContent = "Add task";
-    loadTasks();
+    body: JSON.stringify({ tasks: user.tasks })
   });
+
+  currTask = null;
+  popup.style.display = "none";
+  taskIp.value = "";
+  submitBtn.textContent = "Add task";
+  await loadTasks();
 }
 
 function displayData() {
@@ -104,23 +122,34 @@ function displayData() {
   document.getElementById("tasksd").innerHTML = container;
 }
 
-function deleteTask(i) {
-  fetch(`${apiUrl}/${tasks[i].id}`, {
-    method: "DELETE"
-  }).then(loadTasks);
+async function deleteTask(i) {
+  const res = await fetch(apiUrl);
+  const user = await res.json();
+
+  user.tasks.splice(i, 1);
+
+  await fetch(apiUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ tasks: user.tasks })
+  });
+
+  await loadTasks();
 }
 
-function toggleTask(i) {
-  const task = tasks[i];
+async function toggleTask(i) {
+  const res = await fetch(apiUrl);
+  const user = await res.json();
 
-  fetch(`${apiUrl}/${task.id}`, {
-    method: "PUT",
+  user.tasks[i].completed = !user.tasks[i].completed;
+
+  await fetch(apiUrl, {
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ...task,
-      completed: !task.completed
-    })
-  }).then(loadTasks);
+    body: JSON.stringify({ tasks: user.tasks })
+  });
+
+  await loadTasks();
 }
 
 function getTask(i) {
