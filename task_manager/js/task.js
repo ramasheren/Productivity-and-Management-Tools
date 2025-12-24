@@ -1,9 +1,7 @@
 let tasks = [];
 let currTask = null;
 
-import { getCurrentUser } from "../../login/js/main.js";
-const currUser = getCurrentUser();
-
+const currUser = JSON.parse(localStorage.getItem("loggedUser"));
 const apiUrl = `http://localhost:5000/users/${currUser.id}`;
 
 const popup = document.getElementById("promptPopup");
@@ -13,7 +11,8 @@ const submitBtn = document.getElementById("submitBtn");
 const taskIp = document.getElementById("taskIp");
 const searchInput = document.getElementById("search");
 const nameEl = document.querySelector(".username");
-
+const emlEl = document.getElementById("eml");
+if (emlEl) emlEl.innerHTML = currUser.email;
 nameEl.innerHTML = currUser.name;
 
 openBtn.onclick = () => {
@@ -24,7 +23,6 @@ openBtn.onclick = () => {
 };
 
 closeBtn.onclick = () => popup.style.display = "none";
-
 submitBtn.onclick = handleSubmit;
 
 function handleSubmit() {
@@ -35,7 +33,6 @@ function handleSubmit() {
 async function loadTasks() {
   const res = await fetch(apiUrl);
   const user = await res.json();
-
   if (!user.tasks) {
     user.tasks = [];
     await fetch(apiUrl, {
@@ -44,7 +41,6 @@ async function loadTasks() {
       body: JSON.stringify({ tasks: user.tasks })
     });
   }
-
   tasks = user.tasks;
   displayData();
 }
@@ -52,43 +48,25 @@ async function loadTasks() {
 loadTasks();
 
 async function addTask() {
-  const newTask = { 
-    id: Date.now(),
-    text: taskIp.value,
-    completed: false
-  };
-
-  const res = await fetch(apiUrl);
-  const user = await res.json();
-
-  if (!user.tasks) user.tasks = [];
-
-  user.tasks.push(newTask);
-
+  const newTask = { id: Date.now(), text: taskIp.value, completed: false };
+  tasks.push(newTask);
   await fetch(apiUrl, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ tasks: user.tasks })
+    body: JSON.stringify({ tasks: tasks })
   });
-
   popup.style.display = "none";
   taskIp.value = "";
   await loadTasks();
 }
 
 async function editTask() {
-  const res = await fetch(apiUrl);
-  const user = await res.json();
-
-  const task = user.tasks[currTask];
-  task.text = taskIp.value;
-
+  tasks[currTask].text = taskIp.value;
   await fetch(apiUrl, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ tasks: user.tasks })
+    body: JSON.stringify({ tasks: tasks })
   });
-
   currTask = null;
   popup.style.display = "none";
   taskIp.value = "";
@@ -99,12 +77,10 @@ async function editTask() {
 function displayData() {
   let container = "";
   let sorted = tasks.slice().sort((a, b) => a.completed - b.completed);
-
   sorted.forEach(task => {
     let index = tasks.findIndex(t => t.id === task.id);
     let checked = task.completed ? "checked" : "";
     let style = task.completed ? "text-decoration:line-through;opacity:.5" : "";
-
     container += `
       <div class="task-item">
         <label>
@@ -118,37 +94,26 @@ function displayData() {
       </div>
     `;
   });
-
   document.getElementById("tasksd").innerHTML = container;
 }
 
 async function deleteTask(i) {
-  const res = await fetch(apiUrl);
-  const user = await res.json();
-
-  user.tasks.splice(i, 1);
-
+  tasks.splice(i, 1);
   await fetch(apiUrl, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ tasks: user.tasks })
+    body: JSON.stringify({ tasks: tasks })
   });
-
   await loadTasks();
 }
 
 async function toggleTask(i) {
-  const res = await fetch(apiUrl);
-  const user = await res.json();
-
-  user.tasks[i].completed = !user.tasks[i].completed;
-
+  tasks[i].completed = !tasks[i].completed;
   await fetch(apiUrl, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ tasks: user.tasks })
+    body: JSON.stringify({ tasks: tasks })
   });
-
   await loadTasks();
 }
 

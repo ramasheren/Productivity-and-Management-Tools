@@ -102,7 +102,22 @@ input:checked + span {
   position: fixed;
   top: 0;
 }
+.logo img{
+  height: 70px;
+  width: auto;
+  position: fixed;
+  top:10px;
+  left:20px;
+}
 
+#title{
+  position: fixed;
+  top:10px;
+  left:100px; 
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+}
+  
 .topbar-menu {
   list-style: none;
   display: flex;
@@ -132,7 +147,6 @@ input:checked + span {
 .profilebar {
   width: 200px;
   background: #fff;
-  border-radius: 14px;
   padding: 30px;
   position: fixed;
   top: 100px; 
@@ -144,6 +158,9 @@ input:checked + span {
   gap: 15px;
   box-shadow: 0 20px 40px rgba(0,0,0,.1);
 }
+ #eml{
+  margin-top: -30px;
+ }
 
 .profilebar .avatar {
   width: 80px;

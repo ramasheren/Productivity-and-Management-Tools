@@ -14,9 +14,115 @@
     },
     {
       "id": "82e9",
-      "name": "ramra",
+      "name": "rama",
       "email": "rama@gmail.com",
-      "password": "123"
+      "password": "123",
+      "tasks": [
+        {
+          "id": 1766528981413,
+          "text": "finalize webdev project",
+          "completed": false
+        },
+        {
+          "id": 1766529017507,
+          "text": "go to the gym",
+          "completed": true
+        },
+        {
+          "id": 1766529042269,
+          "text": "do node.js task3",
+          "completed": true
+        },
+        {
+          "id": 1766529781126,
+          "text": "do react figma tas7",
+          "completed": false
+        }
+      ],
+      "events": [
+        {
+          "id": 1766530741980,
+          "date": "2025-12-26",
+          "text": "Aisha's BD"
+        },
+        {
+          "id": 1766530756299,
+          "date": "2025-12-31",
+          "text": "Chrismas Eve"
+        }
+      ],
+      "habits": {
+        "water": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "journal": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "workout": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "read": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "eat": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "clean": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "cook": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ]
+      },
+      "expenses": [
+        {
+          "name": "WIFI bill",
+          "amount": "1600",
+          "date": "2026-01-02"
+        }
+      ]
     },
     {
       "id": "9812",

@@ -1,11 +1,9 @@
-/* Reset */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-/* Body */
 body {
   display: flex;
   justify-content: center;
@@ -15,7 +13,6 @@ body {
   font-family: system-ui, sans-serif;
 }
 
-/* Form */
 form {
   border: 2px solid #764ba2;
   padding: 50px;
@@ -25,7 +22,6 @@ form {
   width: 350px;
 }
 
-/* Form headings and paragraph */
 form h1, form p {
   text-align: center;
 }
@@ -35,7 +31,6 @@ form p {
   margin-bottom: 20px;
 }
 
-/* Container for labels + inputs */
 form .container {
   display: flex;
   flex-direction: column;
@@ -43,14 +38,12 @@ form .container {
   width: 100%;
 }
 
-/* Labels */
 label {
   padding-left: 5px;
   font-family: 'Courier New', Courier, monospace;
   padding-bottom: 5px;
 }
 
-/* Inputs */
 #name,
 #email,
 #password {
@@ -68,7 +61,6 @@ label {
   border-color: #667eea;
 }
 
-/* Buttons */
 form button {
   color: white;
   width: 100%;
@@ -83,13 +75,11 @@ form button {
   margin-top: 10px;
 }
 
-/* Button hover */
 form button:hover {
   transform: translateY(-2px);
   background-color: #764ba2;
 }
 
-/* Optional: small screens */
 @media (max-width: 400px) {
   form {
     width: 90%;

@@ -26,7 +26,7 @@ form.addEventListener("submit", async (e) => {
     );
 
     if (user) {
-      // ✅ SAVE LOGGED-IN USER (NO PASSWORD)
+      // ✅ SAVE LOGGED-IN USER (no password)
       localStorage.setItem(
         "loggedUser",
         JSON.stringify({
@@ -40,7 +40,6 @@ form.addEventListener("submit", async (e) => {
 
       // Redirect to your app
       window.location.href = "../task_manager/task_manager.html";
-
     } else {
       alert("Invalid email or password!");
     }
@@ -50,3 +49,4 @@ form.addEventListener("submit", async (e) => {
     alert("Something went wrong. Please try again later.");
   }
 });
+
