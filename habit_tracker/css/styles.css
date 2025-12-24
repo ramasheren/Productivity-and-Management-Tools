@@ -112,7 +112,7 @@ input:checked + span {
 
 #title{
   position: fixed;
-  top:10px;
+  top:15px;
   left:100px; 
   font-family: Georgia, serif;
   font-size: 1.5rem;
