@@ -4,7 +4,98 @@
       "id": "0d0c",
       "name": "Bassel",
       "email": "basselalaa17@gmail.com",
-      "password": "basselalaa1"
+      "password": "basselalaa1",
+      "tasks": [
+        {
+          "id": 1766538143097,
+          "text": "Intern",
+          "completed": false
+        }
+      ],
+      "events": [
+        {
+          "id": 1766538178782,
+          "date": "2025-12-18",
+          "text": "Event"
+        },
+        {
+          "id": 1766538214606,
+          "date": "2025-12-31",
+          "text": "Football Game"
+        }
+      ],
+      "habits": {
+        "water": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "journal": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "workout": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "read": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "eat": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "clean": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "cook": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ]
+      },
+      "expenses": [
+        {
+          "name": "Car",
+          "amount": "230000",
+          "date": "2025-12-26"
+        }
+      ]
     },
     {
       "id": "78a8",
@@ -121,6 +212,11 @@
           "name": "WIFI bill",
           "amount": "1600",
           "date": "2026-01-02"
+        },
+        {
+          "name": "Tution",
+          "amount": "22000",
+          "date": "2026-02-24"
         }
       ]
     },
